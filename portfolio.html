@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adhil — Robotics & Automation Engineer</title>
+<meta name="description" content="Portfolio of Adhil — Robotics &amp; Automation Engineer working across PLC control, industrial IoT, and applied computer vision.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:        #070C15;
+    --bg-2:      #0C1524;
+    --glass:     rgba(255,255,255,0.055);
+    --glass-hi:  rgba(255,255,255,0.09);
+    --border:    rgba(255,255,255,0.14);
+    --border-hi: rgba(255,255,255,0.28);
+    --text:      #EAF1F6;
+    --text-soft: #9FB1C2;
+    --text-faint:#5D6E80;
+    --cyan:      #5FE3C8;
+    --violet:    #8C7CFF;
+    --amber:     #F2B24B;
+    --grad: linear-gradient(135deg, var(--cyan), var(--violet));
+
+    --display: 'Space Grotesk', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --body: 'Inter', sans-serif;
+    --maxw: 1160px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0; background: var(--bg); color: var(--text);
+    font-family: var(--body); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative; overflow-x: hidden;
+  }
+  a{ color:inherit; }
+  img,video{ max-width:100%; display:block; }
+  .wrap{ max-width: var(--maxw); margin:0 auto; padding: 0 28px; position:relative; z-index:2; }
+
+  /* ===== Ambient background: binary rain + circuit grid + aurora blobs ===== */
+  .bg-fx{ position: fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  #rain{ position:absolute; inset:0; width:100%; height:100%; opacity:0.5; }
+  .parallax-layer{ position:absolute; inset:-60px; transition: transform .15s ease-out; }
+  .blob{ position:absolute; border-radius:50%; filter: blur(90px); opacity:0.30; }
+  .blob.b1{ width:520px; height:520px; background: var(--cyan); top:-160px; left:-120px; animation: drift1 22s ease-in-out infinite; }
+  .blob.b2{ width:460px; height:460px; background: var(--violet); top:220px; right:-140px; animation: drift2 26s ease-in-out infinite; }
+  .blob.b3{ width:380px; height:380px; background: #3E6FF2; bottom:-160px; left:30%; animation: drift1 30s ease-in-out infinite reverse; opacity:0.2; }
+  @keyframes drift1{ 0%,100%{ transform: translate(0,0); } 50%{ transform: translate(40px,60px); } }
+  @keyframes drift2{ 0%,100%{ transform: translate(0,0); } 50%{ transform: translate(-50px,40px); } }
+
+  .grid-overlay{
+    position:absolute; inset:-40px;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  /* ===== Glass utility ===== */
+  .glass{
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-radius: 16px;
+  }
+
+  /* ===== Nav ===== */
+  header.site-nav{ position: sticky; top:0; z-index:50; padding: 18px 0; }
+  .nav-inner{ max-width: var(--maxw); margin:0 auto; padding: 10px 20px; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ font-family: var(--mono); font-size:14px; font-weight:600; letter-spacing:0.05em; text-decoration:none; display:flex; align-items:center; gap:9px; }
+  .brand .dot{ width:8px; height:8px; border-radius:50%; background: var(--cyan); box-shadow: 0 0 12px 2px var(--cyan); }
+  nav.links{ display:flex; gap:26px; }
+  nav.links a{ font-family: var(--mono); font-size:13px; color: var(--text-soft); text-decoration:none; transition: color .2s; }
+  nav.links a:hover{ color: var(--cyan); }
+  @media (max-width:720px){ nav.links{ display:none; } }
+
+  .eyebrow{ font-family: var(--mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color: var(--cyan); display:flex; align-items:center; gap:10px; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  h1,h2,h3{ font-family: var(--display); margin:0; letter-spacing:-0.01em; }
+
+  /* ===== Hero (with 3D perspective wrapper) ===== */
+  .hero{ padding: 60px 0 40px; perspective: 1200px; }
+  .hero-inner{ transition: transform .15s ease-out; transform-style: preserve-3d; }
+  .status-bar{ display:inline-flex; flex-wrap:wrap; gap:20px; align-items:center; padding: 10px 18px; margin-bottom: 36px; font-family: var(--mono); font-size:12px; color: var(--text-soft); }
+  .status-bar span{ display:flex; align-items:center; gap:7px; }
+  .led{ width:8px; height:8px; border-radius:50%; background: var(--cyan); box-shadow:0 0 10px 2px var(--cyan); animation: pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.4; } }
+  .status-bar .sep{ width:1px; height:14px; background: var(--border-hi); }
+
+  .hero h1{
+    font-size: clamp(48px, 9vw, 96px); font-weight:700; line-height:0.98;
+    background: linear-gradient(135deg, #fff 30%, var(--cyan) 90%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero .role{ font-family: var(--mono); font-size: clamp(14px,2vw,18px); color: var(--violet); margin-top:18px; }
+  .hero .thesis{ max-width:640px; margin-top:20px; font-size:18px; color: var(--text-soft); }
+  .cta-row{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+  .btn{ font-family: var(--mono); font-size:13px; padding:13px 22px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border-hi); color: var(--text); transition: all .2s ease; }
+  .btn.primary{ background: var(--grad); color:#06131A; border:none; font-weight:600; }
+  .btn.primary:hover{ filter:brightness(1.1); transform: translateY(-2px); }
+  .btn:not(.primary):hover{ background: var(--glass-hi); border-color: var(--cyan); }
+
+  .stat-strip{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-top:48px; }
+  @media (max-width:760px){ .stat-strip{ grid-template-columns: repeat(2,1fr); } }
+  .stat-card{ padding: 20px 18px; text-align:left; }
+  .stat-card .num{ font-family: var(--display); font-size: 34px; font-weight:700; color: var(--text); }
+  .stat-card .num .grad{ background: var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .stat-card .label{ font-family: var(--mono); font-size:11px; color: var(--text-faint); letter-spacing:0.05em; margin-top:6px; text-transform:uppercase; }
+
+  /* ===== Section shell ===== */
+  section{ padding: 70px 0; }
+  .section-head{ margin-bottom:40px; }
+  .section-head h2{ font-size: clamp(28px,4vw,40px); margin-top:10px; }
+  .group-label{
+    font-family: var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--text-faint); margin: 8px 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .group-label .tag-chip{ color: var(--cyan); border:1px solid rgba(95,227,200,0.4); padding:3px 9px; border-radius:20px; }
+  .group-label .line{ flex:1; height:1px; background: var(--border); }
+  .project-block + .project-block{ margin-top: 44px; }
+
+  .divider{ display:flex; align-items:center; gap:14px; padding: 0 28px; max-width: var(--maxw); margin:0 auto; }
+  .divider .line{ flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--border-hi), transparent); }
+  .divider .blip{ width:7px; height:7px; border-radius:50%; background: var(--cyan); box-shadow:0 0 10px 3px var(--cyan); animation: pulse 2.4s ease-in-out infinite; }
+
+  /* ===== About ===== */
+  .about-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap:28px; }
+  @media (max-width:760px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-card{ padding: 28px; }
+  .about-card p{ color: var(--text-soft); font-size:16px; margin:0; }
+  .facts .row{ display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:13px; }
+  .facts .row:last-child{ border-bottom:none; }
+  .facts .k{ color: var(--text-faint); }
+  .facts .v{ color: var(--text); text-align:right; }
+
+  /* ===== Projects (3D tilt glass cards) ===== */
+  .project-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(360px,1fr)); gap:22px; perspective: 1200px; }
+  .card{ padding: 0; overflow:hidden; transition: transform .12s ease, box-shadow .3s ease, border-color .3s ease; transform-style: preserve-3d; will-change: transform; }
+  .card:hover{ border-color: var(--border-hi); box-shadow: 0 20px 60px -20px rgba(95,227,200,0.25); }
+  .card-head{ display:flex; align-items:center; justify-content:space-between; padding: 14px 18px; font-family: var(--mono); font-size:12px; letter-spacing:0.05em; border-bottom: 1px solid var(--border); }
+  .card-head .code{ color: var(--cyan); }
+  .status-pill{ font-family:var(--mono); font-size:10px; letter-spacing:0.07em; padding:4px 9px; border-radius:20px; border:1px solid currentColor; }
+  .status-pill.deployed{ color: var(--cyan); }
+  .status-pill.prototype{ color: var(--amber); }
+  .status-pill.learning{ color: var(--violet); }
+
+  .media-slot{ aspect-ratio: 16/9; background: radial-gradient(circle at 30% 20%, rgba(140,124,255,0.12), transparent 60%), var(--bg-2); border-bottom: 1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; color: var(--text-faint); text-align:center; padding:20px; }
+  .media-slot svg{ width:26px; height:26px; opacity:0.6; }
+  .media-slot .hint{ font-family: var(--mono); font-size:11px; max-width:260px; }
+  .media-slot.illustration{ background: var(--bg-2); padding:14px; }
+  .media-slot.illustration svg{ width:100%; height:100%; opacity:1; }
+
+  .card-body{ padding:20px; display:flex; flex-direction:column; gap:12px; }
+  .card-body h3{ font-size:19px; }
+  .card-body p{ color: var(--text-soft); font-size:14.5px; margin:0; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  .tag{ font-family: var(--mono); font-size:11px; padding:4px 10px; border-radius:20px; background: rgba(255,255,255,0.05); border:1px solid var(--border); color: var(--text-soft); }
+
+  /* ===== Skills ===== */
+  .skill-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:20px; }
+  .skill-panel{ padding:0; overflow:hidden; }
+  .skill-panel .head{ font-family: var(--mono); font-size:12px; letter-spacing:0.07em; padding:14px 18px; border-bottom:1px solid var(--border); color: var(--cyan); }
+  .skill-panel ul{ list-style:none; margin:0; padding:14px 18px; }
+  .skill-panel li{ font-size:14px; color: var(--text-soft); padding:6px 0; border-bottom: 1px dashed var(--border); }
+  .skill-panel li:last-child{ border-bottom:none; }
+
+  /* ===== Experience timeline ===== */
+  .timeline{ position:relative; padding-left: 26px; }
+  .timeline::before{ content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background: linear-gradient(180deg, var(--cyan), var(--violet) 60%, transparent); }
+  .exp-item{ position:relative; padding-bottom: 40px; }
+  .exp-item:last-child{ padding-bottom:0; }
+  .exp-item::before{ content:""; position:absolute; left:-26px; top:4px; width:13px; height:13px; border-radius:50%; background: var(--bg); border:2px solid var(--cyan); box-shadow: 0 0 12px 2px rgba(95,227,200,0.5); }
+  .exp-card{ padding: 20px 22px; }
+  .exp-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:8px; }
+  .exp-head h3{ font-size:19px; }
+  .exp-head .org{ color: var(--cyan); font-family: var(--mono); font-size:13px; }
+  .exp-head .dates{ margin-left:auto; font-family:var(--mono); font-size:12px; color: var(--text-faint); }
+  .exp-card ul{ margin:8px 0 0; padding-left:18px; color: var(--text-soft); font-size:14.5px; }
+  .exp-card li{ margin-bottom:5px; }
+  .placeholder-note{ font-family: var(--mono); font-size:12px; color: var(--amber); background: rgba(242,178,75,0.1); border:1px dashed var(--amber); border-radius:8px; padding:8px 12px; display:inline-block; }
+
+  /* ===== Footer / contact ===== */
+  footer{ padding: 70px 0 40px; }
+  .contact-card{ padding: 40px; }
+  .contact-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top:28px; }
+  .contact-item{ padding:16px 18px; border-radius:12px; background: rgba(255,255,255,0.04); border:1px solid var(--border); font-family:var(--mono); font-size:13px; }
+  .contact-item .k{ color: var(--text-faint); display:block; margin-bottom:6px; font-size:11px; letter-spacing:0.07em; text-transform:uppercase; }
+  .contact-item a{ color: var(--cyan); text-decoration:none; }
+  .contact-item a:hover{ text-decoration:underline; }
+  .foot-note{ margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-family:var(--mono); font-size:11px; color: var(--text-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+</style>
+</head>
+<body>
+
+<div class="bg-fx">
+  <canvas id="rain"></canvas>
+  <div class="parallax-layer" id="blobLayer">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+  <div class="parallax-layer" id="gridLayer">
+    <div class="grid-overlay"></div>
+  </div>
+</div>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>ADHIL</a>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner" id="heroInner">
+        <div class="status-bar glass">
+          <span><span class="led"></span>SYSTEMS ONLINE</span>
+          <span class="sep"></span>
+          <span>Chennai, IN</span>
+          <span class="sep"></span>
+          <span>Robotics · Automation · AI/ML</span>
+        </div>
+        <h1>Adhil</h1>
+        <div class="role">ROBOTICS &amp; AUTOMATION ENGINEER — AI/ML &amp; COMPUTER VISION</div>
+        <p class="thesis">
+          I build the layer where PLCs, sensors, and AI models talk to each other — from
+          vision models that inspect parts in real time to the industrial control systems
+          and mobile robots that put their decisions into motion.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#projects">View projects</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat-card glass"><div class="num"><span class="grad" data-count="1">0</span>+</div><div class="label">Years in Automation</div></div>
+          <div class="stat-card glass"><div class="num"><span class="grad" data-count="8">0</span></div><div class="label">Systems Shipped</div></div>
+          <div class="stat-card glass"><div class="num"><span class="grad" data-count="43">0</span></div><div class="label">Machines Connected</div></div>
+          <div class="stat-card glass"><div class="num"><span class="grad" data-count="3">0</span></div><div class="label">AI Models in Production</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">01 / About</div>
+        <h2>Summary</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-card glass">
+          <p>
+            Robotics and Automation Engineer with hands-on industrial experience spanning
+            PLC programming, embedded IoT, and applied computer vision. I've shipped systems
+            that combine Siemens control hardware with modern detection and segmentation
+            models — closing the loop between an AI decision and a physical actuator.
+            Currently deepening ROS2/ROS1 and simulation-based robotics toward graduate
+            study in Robotics/Mechatronics.
+          </p>
+        </div>
+        <div class="about-card glass facts">
+          <div class="row"><span class="k">BASE</span><span class="v">Chennai, India</span></div>
+          <div class="row"><span class="k">FOCUS</span><span class="v">PLC control · Industrial IoT · CV/ML</span></div>
+          <div class="row"><span class="k">CURRENT</span><span class="v">Engineer, TANSAM</span></div>
+          <div class="row"><span class="k">LEARNING</span><span class="v">ROS2 · AMR Navigation · PyTorch</span></div>
+          <div class="row"><span class="k">TARGET</span><span class="v">Robotics/Mechatronics MSc, Germany</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div><div class="blip"></div><div class="line"></div></div>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">02 / Project Log</div>
+        <h2>Selected systems I've built</h2>
+      </div>
+
+      <!-- INDUSTRIAL PROJECTS — TANSAM -->
+      <div class="project-block">
+        <div class="group-label"><span class="tag-chip">TANSAM</span><span>Industrial deployments — production floor systems</span><span class="line"></span></div>
+        <div class="project-grid">
+
+          <article class="card glass">
+            <div class="card-head"><span class="code">QC-01</span><span class="status-pill deployed">DEPLOYED</span></div>
+            <div class="media-slot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="15" height="12" rx="1"></rect><path d="M17 10l5-3v10l-5-3"></path></svg>
+              <div class="hint">Add photo/video here — e.g. insole-flip-inspection.mp4</div>
+            </div>
+            <div class="card-body">
+              <h3>Dual-Sided Insole Quality Inspection</h3>
+              <p>Automated top-and-bottom defect inspection combining YOLOv8 and YOLOv11 detection with a stepper-motor flip mechanism controlled through an S7-1200 PLC. Pass/fail results are relayed to the PLC over python-snap7 to trigger automatic rejection.</p>
+              <div class="tag-row"><span class="tag">YOLOv8</span><span class="tag">YOLOv11</span><span class="tag">S7-1200</span><span class="tag">python-snap7</span></div>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-head"><span class="code">VIS-02</span><span class="status-pill deployed">DEPLOYED</span></div>
+            <div class="media-slot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="15" height="12" rx="1"></rect><path d="M17 10l5-3v10l-5-3"></path></svg>
+              <div class="hint">Add photo/video here — e.g. pallet-segmentation-output.png</div>
+            </div>
+            <div class="card-body">
+              <h3>Pallet Dimensioning via Depth Segmentation</h3>
+              <p>Automated pallet measurement using an Intel RealSense depth camera. MobileSAM handles instance segmentation and YOLO handles detection, extracting pallet dimensions without a human in the loop.</p>
+              <div class="tag-row"><span class="tag">RealSense</span><span class="tag">MobileSAM</span><span class="tag">YOLO</span><span class="tag">OpenCV</span></div>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-head"><span class="code">NET-03</span><span class="status-pill deployed">DEPLOYED</span></div>
+            <div class="media-slot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="15" height="12" rx="1"></rect><path d="M17 10l5-3v10l-5-3"></path></svg>
+              <div class="hint">Add screenshot here — e.g. production-dashboard.png</div>
+            </div>
+            <div class="card-body">
+              <h3>43-Machine Industrial Data Pipeline</h3>
+              <p>Connected 43 production machines through S7-1200 PLCs, streamed through a SIMATIC IOT2050 via Node-RED, and persisted to PostgreSQL. Built a JS-driven dashboard on top for real-time production visibility.</p>
+              <div class="tag-row"><span class="tag">S7-1200 ×43</span><span class="tag">IOT2050</span><span class="tag">Node-RED</span><span class="tag">PostgreSQL</span></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- PERSONAL / LEARNING PROJECTS -->
+      <div class="project-block">
+        <div class="group-label"><span class="tag-chip">PERSONAL</span><span>Independent builds &amp; learning projects</span><span class="line"></span></div>
+        <div class="project-grid">
+
+          <article class="card glass">
+            <div class="card-head"><span class="code">AMR-07</span><span class="status-pill learning">LEARNING</span></div>
+            <div class="media-slot illustration">
+              <svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="amrGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#5FE3C8"/><stop offset="100%" stop-color="#8C7CFF"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="150" cy="95" r="55" fill="none" stroke="#22303C" stroke-width="1"/>
+                <circle cx="150" cy="95" r="38" fill="none" stroke="#22303C" stroke-width="1"/>
+                <path d="M60 130 L150 95 L240 130" stroke="#22303C" stroke-width="1" fill="none"/>
+                <rect x="108" y="78" width="84" height="40" rx="6" fill="none" stroke="url(#amrGrad)" stroke-width="2.5"/>
+                <circle cx="122" cy="128" r="12" fill="none" stroke="url(#amrGrad)" stroke-width="2.5"/>
+                <circle cx="178" cy="128" r="12" fill="none" stroke="url(#amrGrad)" stroke-width="2.5"/>
+                <rect x="140" y="60" width="20" height="18" rx="3" fill="none" stroke="url(#amrGrad)" stroke-width="2.5"/>
+                <circle cx="150" cy="69" r="3" fill="#5FE3C8"/>
+                <path d="M150 60 L150 40" stroke="url(#amrGrad)" stroke-width="2"/>
+                <circle cx="150" cy="38" r="5" fill="none" stroke="url(#amrGrad)" stroke-width="2"/>
+                <g opacity="0.7">
+                  <path d="M40 30 Q80 10 120 30" stroke="#5FE3C8" stroke-width="1" fill="none"/>
+                  <path d="M180 150 Q220 165 260 150" stroke="#8C7CFF" stroke-width="1" fill="none"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card-body">
+              <h3>Autonomous Mobile Robot — Learning Runs</h3>
+              <p>Working through AMR navigation fundamentals on ROS Melodic — mapping, localization, and path planning on a differential-drive base as groundwork before moving to ROS2 for production-grade navigation stacks.</p>
+              <div class="tag-row"><span class="tag">ROS Melodic</span><span class="tag">SLAM</span><span class="tag">AMCL</span><span class="tag">Navigation Stack</span></div>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-head"><span class="code">CTL-04</span><span class="status-pill prototype">PROTOTYPE</span></div>
+            <div class="media-slot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="15" height="12" rx="1"></rect><path d="M17 10l5-3v10l-5-3"></path></svg>
+              <div class="hint">Add screen recording here — e.g. voice-control-demo.mp4</div>
+            </div>
+            <div class="card-body">
+              <h3>Voice-Controlled PLC Dashboard</h3>
+              <p>A Flask + Flask-SocketIO web dashboard that drives motor control on an S7-1200 PLC via python-snap7, with a background speech-recognition thread and real-time state updates.</p>
+              <div class="tag-row"><span class="tag">Flask</span><span class="tag">Flask-SocketIO</span><span class="tag">python-snap7</span></div>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-head"><span class="code">SIM-05</span><span class="status-pill prototype">PROTOTYPE</span></div>
+            <div class="media-slot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="15" height="12" rx="1"></rect><path d="M17 10l5-3v10l-5-3"></path></svg>
+              <div class="hint">Add screen recording here — e.g. spider-sim-demo.mp4</div>
+            </div>
+            <div class="card-body">
+              <h3>Gesture-Controlled Spider Robot Simulator</h3>
+              <p>Real-time hand-gesture control of a simulated legged robot — FastAPI backend, MediaPipe hand tracking, and a Three.js 3D front end, connected over WebSockets.</p>
+              <div class="tag-row"><span class="tag">FastAPI</span><span class="tag">MediaPipe</span><span class="tag">Three.js</span></div>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-head"><span class="code">ROS-06</span><span class="status-pill learning">LEARNING</span></div>
+            <div class="media-slot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="15" height="12" rx="1"></rect><path d="M17 10l5-3v10l-5-3"></path></svg>
+              <div class="hint">Add screenshot here — e.g. ros2-node-graph.png</div>
+            </div>
+            <div class="card-body">
+              <h3>ROS2 Sensor Publisher/Subscriber Package</h3>
+              <p>First ROS2 package built on Jazzy — publisher/subscriber nodes with workspace and sourcing issues worked through from scratch, as a foundation for further ROS2 work.</p>
+              <div class="tag-row"><span class="tag">ROS2 Jazzy</span><span class="tag">Python</span></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div><div class="blip"></div><div class="line"></div></div>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">03 / Subsystems</div>
+        <h2>Technical skills</h2>
+      </div>
+      <div class="skill-grid">
+        <div class="skill-panel glass">
+          <div class="head">ROBOTICS &amp; CONTROLS</div>
+          <ul>
+            <li>ROS2 (Jazzy) &amp; ROS1 (Melodic)</li>
+            <li>PLC ladder logic &amp; Structured Text</li>
+            <li>Siemens TIA Portal / OpenPLC Runtime</li>
+            <li>PROFINET · Modbus TCP/Serial · OPC-UA</li>
+            <li>Stepper/motion control, PID basics</li>
+          </ul>
+        </div>
+        <div class="skill-panel glass">
+          <div class="head">AI &amp; COMPUTER VISION</div>
+          <ul>
+            <li>YOLOv8 / YOLOv11 detection</li>
+            <li>MobileSAM segmentation</li>
+            <li>OpenCV, MobileNetV2 transfer learning</li>
+            <li>Intel RealSense depth imaging</li>
+            <li>TensorFlow/Keras, PyTorch (learning)</li>
+          </ul>
+        </div>
+        <div class="skill-panel glass">
+          <div class="head">EMBEDDED &amp; IoT</div>
+          <ul>
+            <li>ESP32, Arduino Uno</li>
+            <li>Siemens SIMATIC IOT2050</li>
+            <li>DHT11, HC-SR04, LM35 sensor interfacing</li>
+            <li>Modbus TCP slave/master design</li>
+          </ul>
+        </div>
+        <div class="skill-panel glass">
+          <div class="head">PROGRAMMING &amp; DATA</div>
+          <ul>
+            <li>Python (Flask, Flask-SocketIO, snap7)</li>
+            <li>C/C++ embedded</li>
+            <li>JavaScript (Node-RED, Three.js)</li>
+            <li>PostgreSQL, Git/GitHub, Linux</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">04 / Timeline</div>
+        <h2>Experience</h2>
+      </div>
+      <div class="timeline">
+        <div class="exp-item">
+          <div class="exp-card glass">
+            <div class="exp-head">
+              <h3>Engineer, Robotics &amp; Automation Division</h3>
+              <span class="org">TANSAM</span>
+              <span class="dates">[Start date] — Present</span>
+            </div>
+            <ul>
+              <li>Built an automated pallet dimensioning system (RealSense + MobileSAM + YOLO).</li>
+              <li>Connected 43 production machines through S7-1200 PLCs into PostgreSQL via IOT2050 + Node-RED, with a live JS dashboard.</li>
+              <li>Shipped a dual-sided AI insole inspection system (YOLOv8/YOLOv11 + stepper flip + snap7 rejection).</li>
+              <li>Diagnosed industrial network faults and mentored interns via a 12-week PLC curriculum.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-card glass">
+            <div class="exp-head">
+              <h3>[Your role]</h3>
+              <span class="org">ACE Robotics</span>
+              <span class="dates">[Start date] — [End date]</span>
+            </div>
+            <span class="placeholder-note">Add 2–3 bullets on scope, tools, and outcomes</span>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-card glass">
+            <div class="exp-head">
+              <h3>Intern</h3>
+              <span class="org">Hanon Systems</span>
+              <span class="dates">[Start date] — [End date]</span>
+            </div>
+            <span class="placeholder-note">Add 2–3 bullets on scope, tools, and outcomes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-card glass">
+      <div class="eyebrow">05 / Contact</div>
+      <h2>Let's talk</h2>
+      <div class="contact-grid">
+        <div class="contact-item"><span class="k">Email</span><a href="mailto:your.email@example.com">your.email@example.com</a></div>
+        <div class="contact-item"><span class="k">Phone</span><a href="tel:+910000000000">+91 [Your Number]</a></div>
+        <div class="contact-item"><span class="k">LinkedIn</span><a href="#" target="_blank" rel="noopener">linkedin.com/in/[you]</a></div>
+        <div class="contact-item"><span class="k">GitHub</span><a href="#" target="_blank" rel="noopener">github.com/[you]</a></div>
+      </div>
+      <div class="foot-note">
+        <span>Chennai, India</span>
+        <span>Built by hand, no template.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Count-up stats ---- */
+  var counters = document.querySelectorAll('[data-count]');
+  var counted = new WeakSet();
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    if(reduceMotion){ el.textContent = target; return; }
+    var duration = 1100, startTime = null;
+    function step(ts){
+      if(!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      el.textContent = Math.floor(progress * target);
+      if(progress < 1) requestAnimationFrame(step); else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting && !counted.has(entry.target)){
+        counted.add(entry.target); animateCount(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(function(c){ obs.observe(c); });
+
+  /* ---- Binary / circuit rain background ---- */
+  var canvas = document.getElementById('rain');
+  var ctx = canvas.getContext('2d');
+  var W, H, cols, drops, fontSize = 15;
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cols = Math.floor(W / fontSize);
+    drops = new Array(cols).fill(0).map(function(){ return Math.random() * -100; });
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var chars = '01';
+  function drawRain(){
+    ctx.fillStyle = 'rgba(7,12,21,0.14)';
+    ctx.fillRect(0,0,W,H);
+    ctx.font = fontSize + 'px "IBM Plex Mono", monospace';
+    for(var i=0;i<cols;i++){
+      var text = chars[Math.random() > 0.5 ? 1 : 0];
+      var x = i * fontSize;
+      var y = drops[i] * fontSize;
+      var hue = i % 2 === 0 ? 'rgba(95,227,200,0.55)' : 'rgba(140,124,255,0.5)';
+      ctx.fillStyle = hue;
+      ctx.fillText(text, x, y);
+      if(y > H && Math.random() > 0.975) drops[i] = 0;
+      drops[i] += 0.35;
+    }
+  }
+
+  if(!reduceMotion){
+    (function loop(){ drawRain(); requestAnimationFrame(loop); })();
+  } else {
+    ctx.fillStyle = 'rgba(7,12,21,1)'; ctx.fillRect(0,0,W,H);
+  }
+
+  /* ---- Full-page cursor parallax / 3D reaction ---- */
+  var blobLayer = document.getElementById('blobLayer');
+  var gridLayer = document.getElementById('gridLayer');
+  var heroInner = document.getElementById('heroInner');
+
+  if(!reduceMotion){
+    window.addEventListener('mousemove', function(e){
+      var x = e.clientX / window.innerWidth - 0.5;
+      var y = e.clientY / window.innerHeight - 0.5;
+      blobLayer.style.transform = 'translate3d(' + (x*50) + 'px,' + (y*50) + 'px,0)';
+      gridLayer.style.transform = 'translate3d(' + (x*-25) + 'px,' + (y*-25) + 'px,0)';
+      heroInner.style.transform = 'perspective(1000px) rotateX(' + (y*-5) + 'deg) rotateY(' + (x*7) + 'deg)';
+    });
+
+    document.querySelectorAll('.card, .about-card, .stat-card, .exp-card, .contact-card').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(900px) rotateX(' + (y*-6) + 'deg) rotateY(' + (x*8) + 'deg) translateY(-3px)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateY(0)';
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
